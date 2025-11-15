@@ -26,8 +26,8 @@ for sid in $sorted_workspaces; do
     background.drawing=on \
     label.font="sketchybar-app-font:Regular:16.0" \
     background.color="$ACCENT_COLOR" \
-    icon.color="$BACKGROUND" \
-    label.color="$BACKGROUND" \
+    icon.color="$TEXT_COLOR" \
+    label.color="$TEXT_COLOR" \
     background.corner_radius=5 \
     background.height=25 \
     label.drawing=on \

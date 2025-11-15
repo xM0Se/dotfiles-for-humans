@@ -12,8 +12,8 @@ if [ "$SENDER" == "mouse.entered" ]; then
   fi
   sketchybar --set "$NAME" \
     background.drawing=on \
-    label.color="$BACKGROUND" \
-    icon.color="$BACKGROUND" \
+    label.color="$TEXT_COLOR" \
+    icon.color="$TEXT_COLOR" \
     background.color="$ACCENT_COLOR"
   exit 0
 fi
@@ -24,8 +24,8 @@ if [ "$SENDER" == "mouse.exited" ]; then
   fi
   sketchybar --set "$NAME" \
     background.drawing=off \
-    label.color="$BAR_COLOR" \
-    icon.color="$BAR_COLOR" \
+    label.color="$TEXT_COLOR" \
+    icon.color="$TEXT_COLOR" \
     background.color="$ITEM_BG_COLOR"
 
   exit 0
@@ -63,8 +63,8 @@ if [ -z "$icons" ]; then
       display="$monitor" \
       drawing=on \
       label="$icons" \
-      label.color="$BACKGROUND" \
-      icon.color="$BACKGROUND" \
+      label.color="$TEXT_COLOR" \
+      icon.color="$TEXT_COLOR" \
       background.color="$ACCENT_COLOR"
   else
     sketchybar --set "$NAME" drawing=off
@@ -80,8 +80,8 @@ else
       display="$monitor" \
       drawing=on \
       label="$icons" \
-      label.color="$BACKGROUND" \
-      icon.color="$BACKGROUND" \
+      label.color="$TEXT_COLOR" \
+      icon.color="$TEXT_COLOR" \
       background.color="$ACCENT_COLOR"
   else
     sketchybar --set "$NAME" \
@@ -89,8 +89,8 @@ else
       drawing=on \
       label="$icons" \
       background.drawing=off \
-      label.color="$BAR_COLOR" \
-      icon.color="$BAR_COLOR" \
+      label.color="$TEXT_COLOR" \
+      icon.color="$TEXT_COLOR" \
       background.color="$ITEM_BG_COLOR"
 
   fi

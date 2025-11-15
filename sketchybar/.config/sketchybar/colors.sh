@@ -1,8 +1,9 @@
 #!/bin/bash
 
-export WHITE=0xfff8f8f2
-export BAR_COLOR=0xff282a36
-export ITEM_BG_COLOR=0xff8be9fd
-export ACCENT_COLOR=0xff50fa7b
-export BACKGROUND=0xff00263e
-export GOLD=0xffcc9311
+# ROSE PINE MOON
+export BAR_COLOR=0xff393552
+export TEXT_COLOR=0xffe0def4
+export ITEM_BG_COLOR=0xff56526e
+export ACCENT_COLOR=0xfff6c177
+
+# OTHER COLORS
