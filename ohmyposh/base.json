@@ -1,42 +1,31 @@
 {
   "$schema": "https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json",
+  "palette": {
+    "first": "#ea9a97",
+    "middel": "#9ccfd8",
+    "end": "#f6c177",
+    "text": "#232136"
+  },
   "transient_prompt": {
     "background": "transparent",
-    "foreground": "#8be9fd",
+    "foreground": "p:first",
     "template": "❯"
   },
   "blocks": [
-    {
-      "alignment": "right",
-      "segments": [
- 
-        {
-          "background": "#ffb86c",
-          "foreground": "#282a36",
-          "properties": {
-            "always_enabled": true
-          },
-          "style": "plain",
-          "template": " \ueba2 {{ .FormattedMs }} ",
-          "type": "executiontime"
-        }
-      ],
-      "type": "rprompt"
-    },
     {
       "alignment": "left",
       "newline": true,
       "segments": [
 	 {
-          "background": "#8be9fd",
-          "foreground": "#282a36",
-          "style": "plain",
+          "background": "p:first",
+          "foreground": "p:text",
+          "style": "diamond",
           "template": " {{ if .WSL }}WSL at {{ end }}{{.Icon}} \ue0b1",
           "type": "os"
         },
         {
-          "background": "#8be9fd",
-          "foreground": "#282a36",
+          "background": "p:first",
+          "foreground": "p:text",
           "properties": {
             "display_host": false
           },
@@ -46,8 +35,8 @@
           "type": "session"
         },
         {
-          "background": "#50fa7b",
-          "foreground": "#282a36",
+          "background": "p:middel",
+          "foreground": "p:text",
           "powerline_symbol": "\ue0b0",
           "properties": {
             "folder_icon": "\uf115",
@@ -60,8 +49,8 @@
           "type": "path"
         },
         {
-          "background": "#ff79c6",
-          "foreground": "#282a36",
+          "background": "p:end",
+          "foreground": "p:text",
           "powerline_symbol": "\ue0b0",
           "style": "powerline",
           "template": " {{ .HEAD }} ",
@@ -75,7 +64,7 @@
       "newline": true,
       "segments": [
         {
-          "foreground": "#8be9fd",
+          "foreground": "p:first",
           "foreground_templates": [
             "{{ if gt .Code 0 }}#ff0000{{ end }}"
           ],
