@@ -24,6 +24,8 @@ enum layer_names {
     _symbol_layer,
     _keyboard_layer,
     _arrow_layer,
+    _onshape,
+    _onshape_numbers,
 };
 
 enum layers {
@@ -32,24 +34,141 @@ enum layers {
     _LAYER2,
     _LAYER3,
     _LAYER4,
+    _LAYER5,
+    _LAYER6,
 };
 
 /* ----------------------------------------------------------------------------------------------------------------------------------------------------- */
 /* TAP DANCES */
 
 enum {
-    TD_SPACE_ENTER_LAYER1,
-    TD_BSPC_ALT_BSPC,
-    SHIFT_LAYER_2,
+    TD_SPC_ENT_TT1,
+    TD_ALT_BSPC_TT3,
+    TD_SFT_TT2,
+    TD_CBR_ALT,
+    TD_BRC_GUI,
+    TD_SLSH_CTL,
+    TD_PRN_CTL,
+    TD_ABK,
+    TD_MINS_GUI,
 };
 
-static bool td_space_enter_layer1_held = false;
-void dance_space_enter_finished(tap_dance_state_t *state, void *user_data) {
+static bool td_mins_gui_held = false;
+void dance_mins_gui_finished(tap_dance_state_t *state, void *user_data) {
     if (state->pressed) {
-        td_space_enter_layer1_held = true;
+        td_mins_gui_held = true;
+        register_code(KC_RGUI);
+    } else {
+        td_mins_gui_held = false;
+        if (state->count == 1) {
+            tap_code(KC_MINS);
+        } else if (state->count == 2) {
+            tap_code(KC_UNDS);
+        }
+    }
+}
+
+void dance_mins_gui_reset(tap_dance_state_t *state, void *user_data) {
+    if (td_mins_gui_held) {
+        unregister_code(KC_RGUI);
+        td_mins_gui_held = false
+
+
+static bool td_slsh_ctl_held = false;
+void dance_slsh_ctl_finished(tap_dance_state_t *state, void *user_data) {
+    if (state->pressed) {
+        td_slsh_ctl_held = true;
+        register_code(KC_RCTL);
+    } else {
+        td_slsh_ctl_held = false;
+        if (state->count == 1) {
+            tap_code(KC_SLSH);
+        } else if (state->count == 2) {
+            tap_code(KC_BSLS);
+        }
+    }
+}
+
+void dance_slsh_ctl_reset(tap_dance_state_t *state, void *user_data) {
+    if (td_slsh_ctl_held) {
+        unregister_code(KC_RCTL);
+        td_slsh_ctl_held = false;
+    }
+}
+
+static bool td_prn_ctl_held = false;
+void dance_prn_ctl_finished(tap_dance_state_t *state, void *user_data) {
+    if (state->pressed) {
+        td_prn_ctl_held = true;
+        register_code(KC_LCTL);
+    } else {
+        td_prn_ctl_held = false;
+        if (state->count == 1) {
+            tap_code(KC_RPRN);
+        } else if (state->count == 2) { 
+            tap_code(KC_LPRN);
+        }
+    }
+}
+
+void dance_prn_ctl_reset(tap_dance_state_t *state, void *user_data) {
+    if (td_prn_ctl_held) {
+        unregister_code(KC_LCTL);
+        td_prn_ctl_held = false;
+    }
+}
+
+static bool td_brc_gui_held = false;
+void dance_brc_gui_finished(tap_dance_state_t *state, void *user_data) {
+    if (state->pressed) {
+        td_brc_gui_held = true;
+        register_code(KC_LGUI);
+    } else {
+        td_brc_gui_held = false;
+        if (state->count == 1) {
+            tap_code(KC_LBRC);
+        } else if (state->count == 2) {
+            tap_code(KC_RBRC);
+        }
+    }
+}
+
+void dance_brc_gui_reset(tap_dance_state_t *state, void *user_data) {
+    if (td_brc_gui_held) {
+        unregister_code(KC_LGUI);
+        td_brc_gui_held = false;
+    }
+}
+
+static bool td_cbr_alt_held = false;
+void dance_cbr_alt_finished(tap_dance_state_t *state, void *user_data) {
+    if (state->pressed) {
+        td_cbr_alt_held = true;
+        register_code(KC_LALT);
+    } else {
+        td_cbr_alt_held = false;
+        if (state->count == 1) {
+            tap_code(KC_LCBR);
+        } else if (state->count == 2) {
+            tap_code(KC_RCBR);
+        }
+    }
+}
+
+void dance_cbr_alt_reset(tap_dance_state_t *state, void *user_data) {
+    if (td_cbr_alt_held) {
+        unregister_code(KC_LALT);
+        td_cbr_alt_held = false;
+    }
+}
+
+static bool td_spc_ent_tt1_held = false;
+void dance_spc_ent_tt1_finished(tap_dance_state_t *state, void *user_data) {
+    if (state->pressed) {
+        td_spc_ent_tt1_held = true;
         layer_on(_LAYER1);
     } else {
-        td_space_enter_layer1_held = false;
+        td_spc_ent_tt1_held = false;
         if (state->count == 1) {
             tap_code(KC_SPC);
         } else if (state->count == 2) {
@@ -60,20 +179,20 @@ void dance_space_enter_finished(tap_dance_state_t *state, void *user_data) {
     }
 }
 
-void dance_space_enter_reset(tap_dance_state_t *state, void *user_data) {
-    if (td_space_enter_layer1_held) {
+void dance_spc_ent_tt1_reset(tap_dance_state_t *state, void *user_data) {
+    if (td_spc_ent_tt1_held) {
         layer_off(_LAYER1);
-        td_space_enter_layer1_held = false;
+        td_spc_ent_tt1_held = false;
     }
 }
 
-static bool td_bspc_alt_bspc_held = false;
-void dance_backspace_finished(tap_dance_state_t *state, void *user_data) {
+static bool td_alt_bspc_tt3_held = false;
+void dance_alt_bspc_tt3_finished(tap_dance_state_t *state, void *user_data) {
     if (state->pressed) {
-        td_bspc_alt_bspc_held = true;
+        td_alt_bspc_tt3_held = true;
         layer_on(_LAYER4);
     } else {
-        td_bspc_alt_bspc_held = false;
+        td_alt_bspc_tt3_held = false;
         if (state->count == 1) {
             tap_code(KC_BSPC);
         } else if (state->count == 2) {
@@ -86,20 +205,20 @@ void dance_backspace_finished(tap_dance_state_t *state, void *user_data) {
     }
 }
 
-void dance_backspace_reset(tap_dance_state_t *state, void *user_data) {
-    if (td_bspc_alt_bspc_held) {
+void dance_alt_bspc_tt3_reset(tap_dance_state_t *state, void *user_data) {
+    if (td_alt_bspc_tt3_held) {
         layer_off(_LAYER4);
-        td_bspc_alt_bspc_held = false;
+        td_alt_bspc_tt3_held = false;
     }
 }
 
-static bool shift_layer_2_held = false;
-void shift_layer_2_finished(tap_dance_state_t *state, void *user_data) {
+static bool td_sft_tt2 = false;
+void dance_sft_tt2_finished(tap_dance_state_t *state, void *user_data) {
     if (state->pressed) {
-        shift_layer_2_held = true;
+        td_sft_tt2 = true;
         layer_on(_LAYER2);
     } else {
-        shift_layer_2_held = false;
+        td_sft_tt2 = false;
         if (state->count == 1) {
             set_oneshot_mods(MOD_BIT(KC_RSFT));
         } else if (state->count == 2) {
@@ -110,31 +229,22 @@ void shift_layer_2_finished(tap_dance_state_t *state, void *user_data) {
     }
 }
 
-void shift_layer_2_reset(tap_dance_state_t *state, void *user_data) {
-    if (shift_layer_2_held) {
+void dance_sft_tt2_reset(tap_dance_state_t *state, void *user_data) {
+    if (td_sft_tt2) {
         layer_off(_LAYER2);
-        shift_layer_2_held = false;
+        td_sft_tt2 = false;
     }
 }
 
 tap_dance_action_t tap_dance_actions[] = {
-    [TD_SPACE_ENTER_LAYER1] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, dance_space_enter_finished, dance_space_enter_reset),
-    [TD_BSPC_ALT_BSPC]     = ACTION_TAP_DANCE_FN_ADVANCED(NULL, dance_backspace_finished, dance_backspace_reset),
-    [SHIFT_LAYER_2]        = ACTION_TAP_DANCE_FN_ADVANCED(NULL, shift_layer_2_finished, shift_layer_2_reset),
-};
-
-
-/* ----------------------------------------------------------------------------------------------------------------------------------------------------- */
-/* KEY OVERRIDES */
-
-const key_override_t delete_key_override = ko_make_basic(MOD_MASK_SHIFT, KC_BSPC, KC_DEL);
-const key_override_t alt_repeat_key_override = ko_make_basic(MOD_MASK_SHIFT, QK_REP, QK_AREP);
-const key_override_t tab_key_override = ko_make_basic(MOD_MASK_SHIFT, KC_SPC, KC_TAB);
-
-const key_override_t *key_overrides[] = {
-    &delete_key_override,
-    &alt_repeat_key_override,
-    &tab_key_override,
+    [TD_SPC_ENT_TT1]  = ACTION_TAP_DANCE_FN_ADVANCED(NULL, dance_spc_ent_tt1_finished, dance_spc_ent_tt1_reset),
+    [TD_ALT_BSPC_TT3] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, dance_alt_bspc_tt3_finished, dance_alt_bspc_tt3_reset),
+    [TD_SFT_TT2]      = ACTION_TAP_DANCE_FN_ADVANCED(NULL, dance_sft_tt2_finished, dance_sft_tt2_reset),
+    [TD_CBR_ALT]      = ACTION_TAP_DANCE_FN_ADVANCED(NULL, dance_cbr_alt_finished, dance_cbr_alt_reset),
+    [TD_BRC_GUI]      = ACTION_TAP_DANCE_FN_ADVANCED(NULL, dance_brc_gui_finished, dance_brc_gui_reset),
+    [TD_SLSH_CTL]         = ACTION_TAP_DANCE_FN_ADVANCED(NULL, dance_slsh_ctl_finished, dance_slsh_ctl_reset),
+    [TD_PRN_CTL]      = ACTION_TAP_DANCE_FN_ADVANCED(NULL, dance_prn_ctl_finished, dance_prn_ctl_reset),
+    [TD_ABK]          = ACTION_TAP_DANCE_DOUBLE(KC_LABK, KC_RABK),
 };
 
 /* ----------------------------------------------------------------------------------------------------------------------------------------------------- */
@@ -143,10 +253,14 @@ const key_override_t *key_overrides[] = {
 const uint16_t PROGMEM esc_n_r[] = {RALT_T(KC_N), LCTL_T(KC_R), COMBO_END};
 const uint16_t PROGMEM homerow_c_k[] = {KC_C, KC_K, COMBO_END};
 const uint16_t PROGMEM homerow_scroll_g_m[] = {KC_G, KC_M, COMBO_END};
+const uint16_t PROGMEM tab_shift_space[] = {TD(TD_SFT_TT2), TD(TD_SPC_ENT_TT1), COMBO_END};
+const uint16_t PROGMEM delete_shift_bspc[] = {TD(TD_SFT_TT2), TD(TD_ALT_BSPC_TT3), COMBO_END};
 combo_t key_combos[] = {
     COMBO(esc_n_r, KC_ESC),
     COMBO(homerow_c_k, MEH(KC_C)),
     COMBO(homerow_scroll_g_m, MEH(KC_G)),
+    COMBO(tab_shift_space, KC_TAB),
+    COMBO(delete_shift_bspc, KC_DEL),
 };
 
 /* ----------------------------------------------------------------------------------------------------------------------------------------------------- */
@@ -155,15 +269,15 @@ combo_t key_combos[] = {
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [0] = LAYOUT_split_3x6_3(
-  //,-----------------------------------------------------------------------------------------------------------------------.                    ,----------------------------------------------------------------------------------------------------------------------------.
-      KC_NO,            KC_Q,               KC_W,               KC_F,               KC_P,               KC_B,                                     KC_J,               KC_L,                    KC_U,               KC_Y,               MEH(KC_L),          MEH(KC_U),
-  //|-------------------+-------------------+-------------------+-------------------+-------------------+-------------------|                    |-------------------+------------------------+-------------------+-------------------+-------------------+-------------------|
-      MEH(KC_A),          (KC_A),       LCTL_T(KC_R),       LGUI_T(KC_S),       LALT_T(KC_T),       KC_G,                                     KC_M,               RALT_T(KC_N),            RGUI_T(KC_E),       RCTL_T(KC_I),       (KC_O),       MEH(KC_P),
-  //|-------------------+-------------------+-------------------+-------------------+-------------------+-------------------|                    |-------------------+------------------------+-------------------+-------------------+-------------------+-------------------|
-      MEH(KC_Z),          KC_Z,               KC_X,               KC_C,               KC_D,               KC_V,                                     KC_K,               KC_H,                    KC_DOT,             KC_COMM,            MEH(KC_X),          MEH(KC_H),
-  //|-------------------+-------------------+-------------------+-------------------+-------------------+-------------------|                    |-------------------+------------------------+-------------------+-------------------+-------------------+-------------------|
-                                                                                                                    KC_NO,   TD(TD_SPACE_ENTER_LAYER1),  KC_TAB,     TD(TD_BSPC_ALT_BSPC),   TD(SHIFT_LAYER_2),   KC_NO
-                                                                                                        //`--------------------------'  `--------------------------'
+  //,-----------------------------------------------------------------------------------------------------------------------.                                                           ,-----------------------------------------------------------------------------------------------------------------------.
+      TO(5),              KC_Q,               KC_W,               KC_F,               KC_P,              KC_B,                                                                           KC_J,               KC_L,                    KC_U,               KC_Y,               MEH(KC_L),          MEH(KC_U),
+  //|-------------------+-------------------+-------------------+-------------------+-------------------+-------------------|                                                           |-------------------+-------------------+-------------------+-------------------+-------------------+-------------------|
+      MEH(KC_A),          KC_A,               LCTL_T(KC_R),      LGUI_T(KC_S),       LALT_T(KC_T),       KC_G,                                                                           KC_M,               RALT_T(KC_N),            RGUI_T(KC_E),       RCTL_T(KC_I),       KC_O,       MEH(KC_P),
+  //|-------------------+-------------------+-------------------+-------------------+-------------------+-------------------|                                                           |-------------------+-------------------+-------------------+-------------------+-------------------+-------------------|
+      MEH(KC_Z),          KC_Z,               KC_X,               KC_C,              KC_D,               KC_V,                                                                           KC_K,               KC_H,                    KC_DOT,             KC_COMM,            MEH(KC_X),          MEH(KC_H),
+  //|-------------------+-------------------+-------------------+-------------------+-------------------+-------------------|                                                           |-------------------+-------------------+-------------------+-------------------+-------------------+-------------------|
+                                                                                     KC_NO,              TD(TD_SPC_ENT_TT1),  TD(TD_CBR),                           TD(TD_ALT_BSPC_TT3),   TD(TD_SFT_TT2),   KC_NO
+                                                                                  //`-------------------+-------------------+-------------------'                   |`------------------+-------------------+-------------------'
 
   ),
 
@@ -171,9 +285,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //,-----------------------------------------------------------------------------------------------------------------------.                    ,----------------------------------------------------------------------------------------------------------------------------.
       KC_F1,              KC_F2,              KC_F3,              KC_F4,              KC_F5,              KC_F6,                                    KC_F7,              KC_F8,                   KC_F9,              KC_F10,             KC_F11,             KC_F12,
   //|-------------------+-------------------+-------------------+-------------------+-------------------+-------------------|                    |-------------------+------------------------+-------------------+-------------------+-------------------+-------------------|
-      HYPR(KC_Q),         LCTL_T(KC_1),       LGUI_T(KC_2),       LSFT_T(KC_3),       LALT_T(KC_4),       KC_5,                                     KC_6,               RALT_T(KC_7),            RSFT_T(KC_8),       RGUI_T(KC_9),       RCTL_T(KC_0),       HYPR(KC_0),
+      HYPR(KC_Q),         KC_1,               LCTL_T(KC_2),       LGUI_T(KC_3),       LALT_T(KC_4),       KC_5,                                     KC_6,               RALT_T(KC_7),            RGUI_T(KC_8),       RCTL_T(KC_9),       KC_0,               HYPR(KC_0),
   //|-------------------+-------------------+-------------------+-------------------+-------------------+-------------------|                    |-------------------+------------------------+-------------------+-------------------+-------------------+-------------------|
-      HYPR(KC_W),         HYPR(KC_F),         HYPR(KC_P),         HYPR(KC_B),         HYPR(KC_J),         HYPR(KC_L),                               HYPR(KC_U),         HYPR(KC_A),              HYPR(KC_R),         HYPR(KC_S),         HYPR(KC_T),         HYPR(KC_E),
+      HYPR(KC_W),         HYPR(KC_F),         HYPR(KC_P),         HYPR(KC_B),         HYPR(KC_J),         HYPR(KC_L),                               HYPR(KC_U),         HYPR(KC_A),              KC_DOT,            KC_COMM,         HYPR(KC_T),         HYPR(KC_E),
   //|-------------------+-------------------+-------------------+-------------------+-------------------+-------------------|                    |-------------------+------------------------+-------------------+-------------------+-------------------+-------------------|
                                                                                                             TO(0),   _______,   TT(2),     _______,   _______,   TT(3)
                                                                                                         //`--------------------------'  `--------------------------'
@@ -182,11 +296,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [2] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------------------------------------------------------------------------.                    ,----------------------------------------------------------------------------------------------------------------------------.
-      MEH(KC_B),          KC_LBRC,            KC_PERC,            KC_PIPE,            KC_PPLS,            KC_AT,                                    KC_AMPR,            KC_LT,                   KC_GT,              KC_DQUO,            KC_TILD,            MEH(KC_J),
+      MEH(KC_B),          KC_NO,              KC_PERC,            KC_PIPE,            KC_PPLS,            KC_AT,                                    TD(TD_ABK),            KC_AMPR,             KC_TILD,              KC_DQUO,            KC_NO,            MEH(KC_J),
   //|-------------------+-------------------+-------------------+-------------------+-------------------+-------------------|                    |-------------------+------------------------+-------------------+-------------------+-------------------+-------------------|
-      MEH(KC_G),          LCTL_T(KC_RBRC),    LGUI_T(KC_PEQL),    LSFT_T(KC_PMNS),    LALT_T(KC_PAST),    KC_DLR,                                   KC_EXLM,            RALT_T(KC_SLSH),         RSFT_T(KC_BSLS),    RGUI_T(KC_DOT),     RCTL_T(KC_SCLN),    MEH(KC_M),
+      MEH(KC_G),          KC_GRV,             TD(TD_PRN_CTL),    TD(TD_BRC_GUI),     TD(TD_CBR_ALT),    KC_DLR,                                      KC_EXLM,            RALT_T(KC_COLN),         RGUI_T(KC_MINS),    TD(TD_SLSH_CTL),     KC_SCLN,           MEH(KC_M),
   //|-------------------+-------------------+-------------------+-------------------+-------------------+-------------------|                    |-------------------+------------------------+-------------------+-------------------+-------------------+-------------------|
-      MEH(KC_V),          KC_GRV,             KC_LPRN,            KC_RPRN,            KC_QUES,            KC_CIRC,                                  KC_LCBR,            KC_UNDS,                 KC_RCBR,            KC_HASH,            KC_COLN,            MEH(KC_K),
+      MEH(KC_V),          KC_NO,             KC_PEQL,          KC_PAST,               KC_QUES,            KC_CIRC,                                  KC_EQL,            KC_UNDS,                 KC_DOT,            KC_COMM,            KC_HASH,            MEH(KC_K),
   //|-------------------+-------------------+-------------------+-------------------+-------------------+-------------------|                    |-------------------+------------------------+-------------------+-------------------+-------------------+-------------------|
                                                                                                             TO(0),   _______,   TT(3),     _______,   _______,   KC_NO
                                                                                                         //`--------------------------'  `--------------------------'
@@ -215,6 +329,30 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       KC_NO,            KC_NO,               KC_NO,               KC_NO,             KC_NO,               KC_NO,                                   KC_NO,             KC_NO,                   KC_NO,              KC_NO,              KC_NO,              KC_NO,
   //|-------------------+-------------------+-------------------+-------------------+-------------------+-------------------|                    |-------------------+------------------------+-------------------+-------------------+-------------------+-------------------|
                                                                                                             TO(0),  _______,  KC_SPC,     KC_ENT,   _______,  KC_RALT
+                                                                                                        //`--------------------------'  `--------------------------'
+  ),
+    [5] = LAYOUT_split_3x6_3(
+
+  //,-----------------------------------------------------------------------------------------------------------------------.                    ,---------------------------------------------------------------------------------------------------------------------------.
+      KC_NO,            KC_C,                KC_G,                KC_L,              KC_D,                KC_NO,                                   KC_NO,             KC_NO,                   KC_NO,              KC_NO,              KC_NO,              KC_NO,
+  //|-------------------+-------------------+-------------------+-------------------+-------------------+-------------------|                    |-------------------+------------------------+-------------------+-------------------+-------------------+-------------------|
+      KC_NO,            LSFT(KC_F),          LSFT(KC_E),          LSFT(KC_S),        KC_DELETE,           KC_NO,                                   KC_NO,             KC_NO,                   KC_NO,              KC_NO,              KC_NO,              KC_NO,
+  //|-------------------+-------------------+-------------------+-------------------+-------------------+-------------------|                    |-------------------+------------------------+-------------------+-------------------+-------------------+-------------------|
+      KC_NO,            KC_NO,               KC_NO,               LSG(KC_Z),         LGUI(KC_Z),          KC_NO,                                   KC_NO,             KC_NO,                   KC_NO,              KC_NO,              KC_NO,              KC_NO,
+  //|-------------------+-------------------+-------------------+-------------------+-------------------+-------------------|                    |-------------------+------------------------+-------------------+-------------------+-------------------+-------------------|
+                                                                                                            TO(0),   TO(6),  KC_ESC,     KC_ENT,   _______,  KC_RALT
+                                                                                                        //`--------------------------'  `--------------------------'
+  ),
+    [6] = LAYOUT_split_3x6_3(
+
+  //,-----------------------------------------------------------------------------------------------------------------------.                    ,---------------------------------------------------------------------------------------------------------------------------.
+      KC_NO,            KC_7,                KC_8,                KC_9,              KC_ENT,              KC_M,                                   KC_NO,             KC_NO,                   KC_NO,              KC_NO,              KC_NO,              KC_NO,
+  //|-------------------+-------------------+-------------------+-------------------+-------------------+-------------------|                    |-------------------+------------------------+-------------------+-------------------+-------------------+-------------------|
+      KC_NO,            KC_4,                KC_5,                KC_6,              KC_DOT,              KC_C,                                   KC_NO,             KC_NO,                   KC_NO,              KC_NO,              KC_NO,              KC_NO,
+  //|-------------------+-------------------+-------------------+-------------------+-------------------+-------------------|                    |-------------------+------------------------+-------------------+-------------------+-------------------+-------------------|
+      KC_NO,            KC_1,                KC_2,                KC_3,              KC_0,                KC_NO,                                   KC_NO,             KC_NO,                   KC_NO,              KC_NO,              KC_NO,              KC_NO,
+  //|-------------------+-------------------+-------------------+-------------------+-------------------+-------------------|                    |-------------------+------------------------+-------------------+-------------------+-------------------+-------------------|
+                                                                                                            TO(0),   TO(5),  KC_BSPC,     KC_ENT,   _______,  KC_RALT
                                                                                                         //`--------------------------'  `--------------------------'
   )
 };
@@ -272,4 +410,3 @@ bool oled_task_user(void) {
 }
 
 #endif
-
