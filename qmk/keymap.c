@@ -174,7 +174,7 @@ void dance_spc_ent_tt1_finished(tap_dance_state_t *state, void *user_data) {
             tap_code(KC_SPC);
         } else if (state->count == 2) {
             tap_code(KC_ENT);
-        } else if (state->count >= 3) {
+        } else if (state->count >= 5) {
             layer_on(_LAYER1);
         }
     }
@@ -200,7 +200,7 @@ void dance_alt_bspc_tt3_finished(tap_dance_state_t *state, void *user_data) {
             register_code(KC_LALT);
             tap_code(KC_BSPC);
             unregister_code(KC_LALT);
-        } else if (state->count >= 3) {
+        } else if (state->count >= 5) {
             layer_on(_LAYER4);
         }
     }
@@ -224,7 +224,7 @@ void dance_sft_tt2_finished(tap_dance_state_t *state, void *user_data) {
             set_oneshot_mods(MOD_BIT(KC_RSFT));
         } else if (state->count == 2) {
             caps_word_toggle();
-        } else if (state->count >= 3) {
+        } else if (state->count >= 5) {
             layer_on(_LAYER2);
         }
     }
