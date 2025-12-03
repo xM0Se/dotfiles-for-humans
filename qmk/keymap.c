@@ -51,7 +51,26 @@ enum {
     TD_PRN_CTL,
     TD_ABK,
     TD_MINS_GUI,
+    TD_COLN_ALT,
 };
+
+static bool td_coln_alt_held = false;
+void dance_coln_alt_finished(tap_dance_state_t *state, void *user_data) {
+    if (state->pressed) {
+        td_coln_alt_held = true;
+        register_code(KC_RALT);
+    } else {
+        td_coln_alt_held = false;
+        tap_code16(KC_COLN);
+    }
+}
+
+void dance_coln_alt_reset(tap_dance_state_t *state, void *user_data) {
+    if (td_coln_alt_held) {
+        unregister_code(KC_RALT);
+        td_coln_alt_held = false;
+    }
+}
 
 static bool td_mins_gui_held = false;
 void dance_mins_gui_finished(tap_dance_state_t *state, void *user_data) {
@@ -105,9 +124,9 @@ void dance_prn_ctl_finished(tap_dance_state_t *state, void *user_data) {
     } else {
         td_prn_ctl_held = false;
         if (state->count == 1) {
-            tap_code16(KC_RPRN);
-        } else if (state->count == 2) { 
             tap_code16(KC_LPRN);
+        } else if (state->count == 2) { 
+            tap_code16(KC_RPRN);
         }
     }
 }
@@ -247,6 +266,7 @@ tap_dance_action_t tap_dance_actions[] = {
     [TD_PRN_CTL]      = ACTION_TAP_DANCE_FN_ADVANCED(NULL, dance_prn_ctl_finished, dance_prn_ctl_reset),
     [TD_ABK]          = ACTION_TAP_DANCE_DOUBLE(KC_LABK, KC_RABK),
     [TD_MINS_GUI]     = ACTION_TAP_DANCE_FN_ADVANCED(NULL, dance_mins_gui_finished, dance_mins_gui_reset),
+    [TD_COLN_ALT]     = ACTION_TAP_DANCE_FN_ADVANCED(NULL, dance_coln_alt_finished, dance_coln_alt_reset),
 };
 
 /* ----------------------------------------------------------------------------------------------------------------------------------------------------- */
@@ -300,7 +320,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //,-----------------------------------------------------------------------------------------------------------------------.                    ,----------------------------------------------------------------------------------------------------------------------------.
       MEH(KC_B),          KC_NO,              KC_PERC,            KC_PIPE,            KC_PPLS,            KC_AT,                                    TD(TD_ABK),            KC_AMPR,             KC_TILD,              KC_DQUO,            KC_NO,            MEH(KC_J),
   //|-------------------+-------------------+-------------------+-------------------+-------------------+-------------------|                    |-------------------+------------------------+-------------------+-------------------+-------------------+-------------------|
-      MEH(KC_G),          KC_GRV,             TD(TD_PRN_CTL),    TD(TD_BRC_GUI),     TD(TD_CBR_ALT),    KC_DLR,                                      KC_EXLM,            RALT_T(KC_COLN),         TD(TD_MINS_GUI),    TD(TD_SLSH_CTL),     KC_SCLN,           MEH(KC_M),
+      MEH(KC_G),          KC_GRV,             TD(TD_PRN_CTL),    TD(TD_BRC_GUI),     TD(TD_CBR_ALT),    KC_DLR,                                      KC_EXLM,            TD(TD_COLN_ALT),         TD(TD_MINS_GUI),    TD(TD_SLSH_CTL),     KC_SCLN,           MEH(KC_M),
   //|-------------------+-------------------+-------------------+-------------------+-------------------+-------------------|                    |-------------------+------------------------+-------------------+-------------------+-------------------+-------------------|
       MEH(KC_V),          KC_NO,             KC_PEQL,          KC_PAST,               KC_QUES,            KC_CIRC,                                  KC_EQL,            KC_UNDS,                 KC_DOT,            KC_COMM,            KC_HASH,            MEH(KC_K),
   //|-------------------+-------------------+-------------------+-------------------+-------------------+-------------------|                    |-------------------+------------------------+-------------------+-------------------+-------------------+-------------------|
