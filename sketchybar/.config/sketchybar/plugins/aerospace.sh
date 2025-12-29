@@ -1,97 +1,29 @@
-#!/usr/bin/env bash
-
-# make sure it's executable with:
-# chmod +x ~/.config/sketchybar/plugins/aerospace.sh
+#!/bin/bash
 source "$CONFIG_DIR/colors.sh"
 
-FOCUSED_WORKSPACE=$(aerospace list-workspaces --focused --format "%{workspace}")
+sid="$1"
 
-if [ "$SENDER" == "mouse.entered" ]; then
-  if [ "$1" = "$FOCUSED_WORKSPACE" ]; then
-    exit 0
-  fi
-  sketchybar --set "$NAME" \
-    background.drawing=on \
-    label.color="$TEXT_COLOR" \
-    icon.color="$TEXT_COLOR" \
-    background.color="$ACCENT_COLOR"
-  exit 0
-fi
+win_count=$(aerospace list-windows --workspace "$sid" 2>/dev/null | wc -l | tr -d ' ')
 
-if [ "$SENDER" == "mouse.exited" ]; then
-  if [ "$1" = "$FOCUSED_WORKSPACE" ]; then
-    exit 0
-  fi
-  sketchybar --set "$NAME" \
-    background.drawing=off \
-    label.color="$TEXT_COLOR" \
-    icon.color="$TEXT_COLOR" \
-    background.color="$ITEM_BG_COLOR"
-
-  exit 0
-fi
-
-icons=""
-
-APPS_INFO=$(aerospace list-windows --workspace "$1" --json --format "%{monitor-appkit-nsscreen-screens-id}%{app-name}")
-
-unique_apps=$(echo "$APPS_INFO" | jq -r 'map(."app-name") | unique[]')
-
-icons=""
-for app in $unique_apps; do
-  icons+=$("$CONFIG_DIR/plugins/icon_map_fn.sh" "$app")
-  icons+="  "
-done
-
-for monitor_id in $(echo "$APPS_INFO" | jq -r "map ( .\"monitor-appkit-nsscreen-screens-id\" ) | .[]"); do
-  monitor=$monitor_id
-done
-
-if [ -z "$monitor" ]; then
-  monitor="1"
-fi
-
-# When icons is empty, set it to " "
-if [ -z "$icons" ]; then
-  if [ "$1" = "$FOCUSED_WORKSPACE" ]; then
-    sketchybar --animate sin 10 \
-      --set "$NAME" \
-      y_offset=10 y_offset=0 \
-      background.drawing=on
-
-    sketchybar --set "$NAME" \
-      display="$monitor" \
-      drawing=on \
-      label="$icons" \
-      label.color="$TEXT_COLOR" \
-      icon.color="$TEXT_COLOR" \
-      background.color="$ACCENT_COLOR"
-  else
-    sketchybar --set "$NAME" drawing=off
-  fi
+if [ "$sid" = "$FOCUSED_WORKSPACE" ]; then
+    LABEL_COLOR="$OPEN_SPACE_COLOR"
 else
-  if [ "$1" = "$FOCUSED_WORKSPACE" ]; then
-    sketchybar --animate sin 10 \
-      --set "$NAME" \
-      y_offset=10 y_offset=0 \
-      background.drawing=on
+    LABEL_COLOR="$TEXT"
+fi
+
+if [ "$sid" = "$FOCUSED_WORKSPACE" ] || [ "$win_count" -gt 0 ]; then
 
     sketchybar --set "$NAME" \
-      display="$monitor" \
-      drawing=on \
-      label="$icons" \
-      label.color="$TEXT_COLOR" \
-      icon.color="$TEXT_COLOR" \
-      background.color="$ACCENT_COLOR"
-  else
-    sketchybar --set "$NAME" \
-      display="$monitor" \
-      drawing=on \
-      label="$icons" \
-      background.drawing=off \
-      label.color="$TEXT_COLOR" \
-      icon.color="$TEXT_COLOR" \
-      background.color="$ITEM_BG_COLOR"
+        label="$sid" \
+        label.color="$LABEL_COLOR" \
+        label.font.size=15 \
+        label.align=center \
+        icon.drawing=off \
+        background.drawing=off \
+        drawing=on
 
-  fi
+else
+
+    sketchybar --set "$NAME" drawing=off
+
 fi

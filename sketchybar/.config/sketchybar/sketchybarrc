@@ -1,37 +1,39 @@
 #!/bin/bash
-source "$CONFIG_DIR/colors.sh"
-PLUGIN_DIR="$CONFIG_DIR/plugins"
+
 ITEM_DIR="$CONFIG_DIR/items"
+PLUGIN_DIR="$CONFIG_DIR/plugins"
+source "$CONFIG_DIR/colors.sh"
+source "$CONFIG_DIR/globals.sh"
+source "$ITEM_DIR/seperator.sh"
 
-sketchybar --bar position=left sticky=on y_offset=10 height=40 corner_radius=10 topmost=off blur_radius=30 padding_right=10 padding_left=10 margin=10 color=$BAR_COLOR
+sketchybar --bar "${SB_BAR[@]}" --default "${SB_DEFAULT[@]}"
+sketchybar --add event window_change
+sketchybar --add event front_app_switched
+sketchybar --add event volume_change
 
-sketchybar --default icon.font="SF Pro:Semibold:15.0" \
-  icon.color=$LIGHT_TEXT \
-  label.font="JetBrains Mono:Semibold:15.0" \
-  label.color=$LIGHT_TEXT \
-  background.color=$ITEM_BG_COLOR \
-  background.corner_radius=5 \
-  background.height=24 \
-  padding_left=5 \
-  padding_right=5 \
-  label.padding_left=4 \
-  label.padding_right=10 \
-  icon.padding_left=10 \
-  icon.padding_right=4
+source "$ITEM_DIR/clock.sh"
+sb_separator left 14 14
+source "$ITEM_DIR/date.sh"
+sb_separator left 14 14
+source "$ITEM_DIR/spaces.sh"
+sb_separator left 14 14
+source "$ITEM_DIR/front_app.sh"
+sb_separator left 14 14
 
-sketchybar --default "${default[@]}"
+source "$ITEM_DIR/apple.sh"
+sb_separator right 14 14
+source "$ITEM_DIR/cpu.sh"
+source "$ITEM_DIR/ram.sh"
+sb_separator right 14 14
+source "$ITEM_DIR/wifi.sh"
+source "$ITEM_DIR/vpn.sh"
+sb_separator right 14 14
+source "$ITEM_DIR/mic.sh"
+source "$ITEM_DIR/volume.sh"
+sb_separator right 14 14
+source "$ITEM_DIR/airpods.sh"
+sb_separator right 14 14
 
-sketchybar --add event aerospace_workspace_change
-sketchybar --add event aerospace_mode_change
-sketchybar --add event display_volume_change
-
-source $ITEM_DIR/calendar.sh
-source $ITEM_DIR/cpu.sh
-
-source $ITEM_DIR/ONE_THING.sh
-
-source $ITEM_DIR/apple.sh
-source $ITEM_DIR/aerospace.sh
-source $ITEM_DIR/front_app.sh
+##################
 
 sketchybar --update

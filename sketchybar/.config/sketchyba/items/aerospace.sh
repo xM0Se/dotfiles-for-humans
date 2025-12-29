@@ -1,18 +1,7 @@
 #!/bin/bash
 
-# Sort workspaces: first "b", then "n", and the rest
-sorted_workspaces=$(aerospace list-workspaces --all | awk '
-  $1 == "b" { print $0; next }
-  $1 == "n" { print $0; next }
-  { print $0 }
-' | sort -s -k1)
-
-for sid in $sorted_workspaces; do
   monitor=$(aerospace list-windows --workspace "$sid" --format "%{monitor-appkit-nsscreen-screens-id}")
 
-  if [ -z "$monitor" ]; then
-    monitor="1"
-  fi
 
   sketchybar --add item space."$sid" left \
     --subscribe space."$sid" aerospace_workspace_change display_change system_woke mouse.entered mouse.exited \

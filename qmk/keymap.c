@@ -272,7 +272,7 @@ tap_dance_action_t tap_dance_actions[] = {
 /* ----------------------------------------------------------------------------------------------------------------------------------------------------- */
 /* COMBOS */
 
-const uint16_t PROGMEM esc_n_r[] = {RALT_T(KC_N), LCTL_T(KC_R), COMBO_END};
+const uint16_t PROGMEM esc_n_r[] = {RALT_T(KC_N), LGUI_T(KC_R), COMBO_END};
 const uint16_t PROGMEM homerow_c_k[] = {KC_C, KC_K, COMBO_END};
 const uint16_t PROGMEM homerow_scroll_g_m[] = {KC_G, KC_M, COMBO_END};
 const uint16_t PROGMEM tab_shift_space[] = {TD(TD_SFT_TT2), TD(TD_SPC_ENT_TT1), COMBO_END};

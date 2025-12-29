@@ -1,12 +1,10 @@
 #!/bin/bash
 
-sketchybar \
-    --add item cpu right \
-    --subscribe cpu system_woke \
-    --set cpu \
-    script="$PLUGIN_DIR/cpu.sh" \
+sketchybar --add item ram right \
+    --set ram \
+    script="$PLUGIN_DIR/ram.sh" \
     update_freq=5 \
-    icon="􀫥" \
+    icon="􀫦" \
     icon.font.size=15 \
     icon.color="$TEXT" \
     label="--%" \

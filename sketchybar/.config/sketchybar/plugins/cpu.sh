@@ -1,10 +1,23 @@
-#!/bin/bash
+#!/usr/bin/env bash
+source "$CONFIG_DIR/colors.sh"
 
-CORE_COUNT=$(sysctl -n machdep.cpu.thread_count)
-CPU_INFO=$(ps -eo pcpu,user)
-CPU_SYS=$(echo "$CPU_INFO" | grep -v $(whoami) | sed "s/[^ 0-9\.]//g" | awk "{sum+=\$1} END {print sum/(100.0 * $CORE_COUNT)}")
-CPU_USER=$(echo "$CPU_INFO" | grep $(whoami) | sed "s/[^ 0-9\.]//g" | awk "{sum+=\$1} END {print sum/(100.0 * $CORE_COUNT)}")
+case "$SENDER" in
+routine | forced | system_woke | mouse.clicked | mouse.entered | mouse.exited)
+    cores=$(sysctl -n hw.logicalcpu 2>/dev/null)
+    if [ -z "$cores" ] || [ "$cores" -lt 1 ]; then
+        cores=1
+    fi
 
-CPU_PERCENT="$(echo "$CPU_SYS $CPU_USER" | awk '{printf "%.0f\n", ($1 + $2)*100}')"
+    cpu_usage=$(ps -A -o %cpu | awk -v cores="$cores" 'NR>1 {sum+=$1} END {if (cores<1) cores=1; printf "%0.f", sum/cores}')
 
-sketchybar --set $NAME label="$CPU_PERCENT%"
+    if [ -z "$cpu_usage" ]; then
+        cpu_usage=0
+    fi
+
+    sketchybar --set "$NAME" \
+        icon="􀫥" \
+        icon.color="$TEXT" \
+        label="${cpu_usage}%" \
+        label.color="$TEXT"
+    ;;
+esac

@@ -2,6 +2,10 @@
 
 after-login-command = []
 
+after-startup-command = [
+  'exec-and-forget borders active_color=0xffeb6f92 inactive_color=0xff44415a width=8.0 hidpi=on'
+]
+
 start-at-login = true
 
 exec-on-workspace-change = [
@@ -33,32 +37,32 @@ preset = 'qwerty'
 
 [gaps]
 # WINDOWS NEXT TO EACH OTHER
-inner.horizontal = 10
-inner.vertical = 10
+inner.horizontal = 18
+inner.vertical = 18
+
 # WINDOWS NEXT TO DISPLAY
-outer.left = 10
-outer.bottom = 10
-outer.top = 60    # ADDED 30 PADDING FOR SKETCHYBAR
-outer.right = 10
+outer.left = 88 # added padding because of sketchybar
+outer.bottom = 18
+outer.top = 18   
+outer.right = 18
 
 [mode.main.binding]
-alt-x = 'exec-and-forget /Users/moritz/.config/sketchybar/items/SketchybarLabel.sh'
 
 alt-7 = 'layout tiles horizontal vertical'
 alt-6 = 'layout accordion horizontal vertical'
 
 
 # ----- WINDOW NAVIGATING ----- #
-alt-n = 'focus left'
-alt-e = 'focus down'
-alt-i = 'focus up'
-alt-o = 'focus right'
+alt-h = 'focus left'
+alt-j = 'focus down'
+alt-k = 'focus up'
+alt-l = 'focus right'
 
 
-alt-shift-n = 'move left'
-alt-shift-e = 'move down'
-alt-shift-i = 'move up'
-alt-shift-o = 'move right'
+alt-shift-h = 'move left'
+alt-shift-j = 'move down'
+alt-shift-k = 'move up'
+alt-shift-l = 'move right'
 
 alt-shift-0 = 'resize smart -50'
 alt-0 = 'resize smart +50'
@@ -74,23 +78,23 @@ alt-5 = 'workspace 5'
 alt-8 = 'workspace 8'
 alt-9 = 'workspace 9'
 alt-a = 'workspace A' #Anki
-alt-c = 'workspace C' #ChatGPT
+alt-c = 'workspace C'
 alt-d = 'workspace D' #Discord
-#alt-e = 'workspace E' #video Editing
+alt-e = 'workspace E' #video Editing
 alt-f = 'workspace F' #finder
 alt-g = 'workspace G' #ghostty
-#alt-i = 'workspace I'
+alt-i = 'workspace I'
 alt-m = 'workspace M' #microsoft
-#alt-n = 'workspace N' #Notes
-#alt-o = 'workspace O'
+alt-n = 'workspace N' #Notes
+alt-o = 'workspace O'
 alt-p = 'workspace P' #Privacy
 alt-r = 'workspace R'
 alt-s = 'workspace S' #scheduling
 alt-t = 'workspace T' #Main Terminal
 alt-u = 'workspace U'
 alt-v = 'workspace V' #VSCode
-alt-w = 'workspace W' #warp terminal
-#alt-x = 'workspace X'
+alt-w = 'workspace W'
+alt-x = 'workspace X'
 alt-y = 'workspace Y'
 alt-z = 'workspace Z' #Home
 
@@ -105,22 +109,22 @@ alt-shift-5 = 'move-node-to-workspace 5'
 alt-shift-8 = 'move-node-to-workspace 8'
 alt-shift-9 = 'move-node-to-workspace 9'
 alt-shift-a = 'move-node-to-workspace A' #Anki
-alt-shift-c = 'move-node-to-workspace C' #ChatGPT
+alt-shift-c = 'move-node-to-workspace C' 
 alt-shift-d = 'move-node-to-workspace D' #Discord
-#alt-shift-e = 'move-node-to-workspace E' #video Editing
+alt-shift-e = 'move-node-to-workspace E' #video Editing
 alt-shift-f = 'move-node-to-workspace F' #finder
 alt-shift-g = 'move-node-to-workspace G' #ghostty
-#alt-shift-i = 'move-node-to-workspace I'
+alt-shift-i = 'move-node-to-workspace I'
 alt-shift-m = 'move-node-to-workspace M' #microsoft
-#alt-shift-n = 'move-node-to-workspace N' #Notes
-#alt-shift-o = 'move-node-to-workspace O'
+alt-shift-n = 'move-node-to-workspace N' #Notes
+alt-shift-o = 'move-node-to-workspace O'
 alt-shift-p = 'move-node-to-workspace P' #Privacy
 alt-shift-r = 'move-node-to-workspace R'
 alt-shift-s = 'move-node-to-workspace S' #scheduling
 alt-shift-t = 'move-node-to-workspace T' #Main Terminal
 alt-shift-u = 'move-node-to-workspace U'
 alt-shift-v = 'move-node-to-workspace V' #VSCode
-alt-shift-w = 'move-node-to-workspace W' # warp terminal
+alt-shift-w = 'move-node-to-workspace W'
 alt-shift-x = 'move-node-to-workspace X'
 alt-shift-y = 'move-node-to-workspace Y'
 alt-shift-z = 'move-node-to-workspace Z' #Home
@@ -208,12 +212,6 @@ run = "move-node-to-workspace S"
 if.app-id = 'com.apple.reminders'
 run = "move-node-to-workspace S"
 
-# Workspace C (ChatGPT)
-
-[[on-window-detected]]
-if.app-id = 'com.openai.chat'
-run = "move-node-to-workspace C"
-
 # Workspace D (Discord)
 
 [[on-window-detected]]
@@ -241,12 +239,6 @@ run = "move-node-to-workspace 3"
 [[on-window-detected]]
 if.app-id = 'com.apple.finder'
 run = "move-node-to-workspace F"
-
-# Workspace W Warp
-
-[[on-window-detected]]
-if.app-id = 'dev.warp.Warp-Stable'
-run = "move-node-to-workspace W"
 
 #Microsoft workspace M
 
@@ -278,9 +270,4 @@ run = 'layout floating'
 
 [[on-window-detected]]
 if.app-id = 'com.apple.coreservices.uiagent'
-run = 'layout floating'
-
-
-[[on-window-detected]]
-if.app-id = 'com.devuap.beautyshotapp'
 run = 'layout floating'
