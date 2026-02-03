@@ -19,7 +19,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 #pragma once
-#define COMBO_TERM 75
+#define COMBO_COUNT COMBO_LENGTH
+
 #define CAPS_WORD_INVERT_ON_SHIFT
 #define CAPS_WORD_IDLE_TIMEOUT 3000  // 3 seconds.
 #define ONESHOT_TAP_TOGGLE 5  /* Tapping this number of times holds the key until tapped once again. */
