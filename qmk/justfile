@@ -1,0 +1,2 @@
+compile:
+    qmk compile -kb crkbd/rev1 -km custom -e CONVERT_TO=rp2040_ce
