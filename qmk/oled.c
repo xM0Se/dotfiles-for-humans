@@ -9,20 +9,23 @@ bool oled_task_user(void) {
 
 
         switch (get_highest_layer(layer_state)) {
-            case _default_layer:
+            case _BASE:
                 oled_write("main layer", false);
                 break;
-            case _number_layer:
+            case _NUMBER:
                 oled_write("number layer", false);
                 break;
-            case _symbol_layer:
+            case _SYMBOL:
                 oled_write("symbol layer", false);
                 break;
-            case _keyboard_layer:
-                oled_write("idk layer", false);
-                break;
-            case _arrow_layer:
+            case _ARROW:
                 oled_write("arrow layer", false);
+                break;
+            case _ONSHAPE:
+                oled_write("onshape layer", false);
+                break;
+            case _ONSHAPE_NUMBERS:
+                oled_write("onshape numbers layer", false);
                 break;
         }
         return false;
