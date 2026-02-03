@@ -20,7 +20,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "tap-dances/tap-dances.h"
 #include "layers/layers.h"
 
-
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     #include "layers/base-layer.h"
     #include "layers/number-layer.h"
