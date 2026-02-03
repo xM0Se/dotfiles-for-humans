@@ -10,4 +10,3 @@ OLED_ENABLE = yes
 LTO_ENABLE = yes
 WPM_ENABLE = yes
 SPLIT_WPM_ENABLE = yes
-SRC += tap-dances.c
