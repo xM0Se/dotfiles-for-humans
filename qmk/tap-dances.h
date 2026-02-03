@@ -1,8 +1,7 @@
 #pragma once
 #include "quantum.h"
-#include "layers.h"
+#include "layers/layers.h"
 
-// Re-declare the enum so keymap.c can see the names
 enum {
     TD_SPC_ENT_TT1,
     TD_ALT_BSPC_TT3,

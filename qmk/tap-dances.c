@@ -1,6 +1,6 @@
 #include QMK_KEYBOARD_H
 #include "tap-dances.h"
-#include "layers.h"
+#include "layers/layers.h"
 
 static bool td_coln_alt_held = false;
 void dance_coln_alt_finished(tap_dance_state_t *state, void *user_data) {
@@ -134,7 +134,7 @@ static bool td_spc_ent_tt1_held = false;
 void dance_spc_ent_tt1_finished(tap_dance_state_t *state, void *user_data) {
     if (state->pressed) {
         td_spc_ent_tt1_held = true;
-        layer_on(_LAYER1);
+        layer_on(_NUMBER);
     } else {
         td_spc_ent_tt1_held = false;
         if (state->count == 1) {
@@ -142,14 +142,14 @@ void dance_spc_ent_tt1_finished(tap_dance_state_t *state, void *user_data) {
         } else if (state->count == 2) {
             tap_code(KC_ENT);
         } else if (state->count >= 5) {
-            layer_on(_LAYER1);
+            layer_on(_NUMBER);
         }
     }
 }
 
 void dance_spc_ent_tt1_reset(tap_dance_state_t *state, void *user_data) {
     if (td_spc_ent_tt1_held) {
-        layer_off(_LAYER1);
+        layer_off(_NUMBER);
         td_spc_ent_tt1_held = false;
     }
 }
@@ -158,7 +158,7 @@ static bool td_alt_bspc_tt3_held = false;
 void dance_alt_bspc_tt3_finished(tap_dance_state_t *state, void *user_data) {
     if (state->pressed) {
         td_alt_bspc_tt3_held = true;
-        layer_on(_LAYER4);
+        layer_on(_ARROW);
     } else {
         td_alt_bspc_tt3_held = false;
         if (state->count == 1) {
@@ -168,14 +168,14 @@ void dance_alt_bspc_tt3_finished(tap_dance_state_t *state, void *user_data) {
             tap_code(KC_BSPC);
             unregister_code(KC_LALT);
         } else if (state->count >= 5) {
-            layer_on(_LAYER4);
+            layer_on(_ARROW);
         }
     }
 }
 
 void dance_alt_bspc_tt3_reset(tap_dance_state_t *state, void *user_data) {
     if (td_alt_bspc_tt3_held) {
-        layer_off(_LAYER4);
+        layer_off(_ARROW);
         td_alt_bspc_tt3_held = false;
     }
 }
@@ -184,7 +184,7 @@ static bool td_sft_tt2 = false;
 void dance_sft_tt2_finished(tap_dance_state_t *state, void *user_data) {
     if (state->pressed) {
         td_sft_tt2 = true;
-        layer_on(_LAYER2);
+        layer_on(_SYMBOL);
     } else {
         td_sft_tt2 = false;
         if (state->count == 1) {
@@ -192,14 +192,14 @@ void dance_sft_tt2_finished(tap_dance_state_t *state, void *user_data) {
         } else if (state->count == 2) {
             caps_word_toggle();
         } else if (state->count >= 5) {
-            layer_on(_LAYER2);
+            layer_on(_SYMBOL);
         }
     }
 }
 
 void dance_sft_tt2_reset(tap_dance_state_t *state, void *user_data) {
     if (td_sft_tt2) {
-        layer_off(_LAYER2);
+        layer_off(_SYMBOL);
         td_sft_tt2 = false;
     }
 }
