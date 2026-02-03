@@ -21,22 +21,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "layers.h"
 
 /* ----------------------------------------------------------------------------------------------------------------------------------------------------- */
-/* COMBOS */
-
-const uint16_t PROGMEM esc_n_r[] = {RALT_T(KC_N), LGUI_T(KC_R), COMBO_END};
-const uint16_t PROGMEM homerow_c_k[] = {KC_C, KC_K, COMBO_END};
-const uint16_t PROGMEM homerow_scroll_g_m[] = {KC_G, KC_M, COMBO_END};
-const uint16_t PROGMEM tab_shift_space[] = {TD(TD_SFT_TT2), TD(TD_SPC_ENT_TT1), COMBO_END};
-const uint16_t PROGMEM delete_shift_bspc[] = {TD(TD_SFT_TT2), TD(TD_ALT_BSPC_TT3), COMBO_END};
-combo_t key_combos[] = {
-    COMBO(esc_n_r, KC_ESC),
-    COMBO(homerow_c_k, MEH(KC_C)),
-    COMBO(homerow_scroll_g_m, MEH(KC_G)),
-    COMBO(tab_shift_space, KC_TAB),
-    COMBO(delete_shift_bspc, KC_DEL),
-};
-
-/* ----------------------------------------------------------------------------------------------------------------------------------------------------- */
 /* KEYMAP */
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -139,60 +123,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|-------------------+-------------------+-------------------+-------------------+-------------------+-------------------|                    |-------------------+------------------------+-------------------+-------------------+-------------------+-------------------|
                                                                                                             TO(0),   TO(5),  KC_BSPC,     KC_ENT,   _______,  KC_RALT
      
-        ),
+),
 };
 
-#ifdef ENCODER_MAP_ENABLE
-const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][NUM_DIRECTIONS] = {
-  [0] = { ENCODER_CCW_CW(KC_VOLD, KC_VOLU), ENCODER_CCW_CW(KC_MPRV, KC_MNXT), ENCODER_CCW_CW(RM_VALD, RM_VALU), ENCODER_CCW_CW(KC_RGHT, KC_LEFT), },
-  [1] = { ENCODER_CCW_CW(KC_VOLD, KC_VOLU), ENCODER_CCW_CW(KC_MPRV, KC_MNXT), ENCODER_CCW_CW(RM_VALD, RM_VALU), ENCODER_CCW_CW(KC_RGHT, KC_LEFT), },
-  [2] = { ENCODER_CCW_CW(KC_VOLD, KC_VOLU), ENCODER_CCW_CW(KC_MPRV, KC_MNXT), ENCODER_CCW_CW(RM_VALD, RM_VALU), ENCODER_CCW_CW(KC_RGHT, KC_LEFT), },
-  [3] = { ENCODER_CCW_CW(KC_VOLD, KC_VOLU), ENCODER_CCW_CW(KC_MPRV, KC_MNXT), ENCODER_CCW_CW(RM_VALD, RM_VALU), ENCODER_CCW_CW(KC_RGHT, KC_LEFT), },
-};
-
-#endif
-#ifdef RGB_MATRIX_ENABLE
-void keyboard_post_init_user(void) {
-    // Set default color to blue (HSV: Hue=170, Sat=255, Val=150)
-    rgb_matrix_sethsv(170, 255, 150);
-}
-#endif
-
-
-#ifdef OLED_ENABLE
-
-bool oled_task_user(void) {
-
-    if (is_keyboard_master()) {
-
-
-        switch (get_highest_layer(layer_state)) {
-            case _default_layer:
-                oled_write("main layer", false);
-                break;
-            case _number_layer:
-                oled_write("number layer", false);
-                break;
-            case _symbol_layer:
-                oled_write("symbol layer", false);
-                break;
-            case _keyboard_layer:
-                oled_write("idk layer", false);
-                break;
-            case _arrow_layer:
-                oled_write("arrow layer", false);
-                break;
-        }
-        return false;
-
-
-    } else { /* left side ^ */ /* rigth side */
-
-        oled_write("hello world",false);
-
-    }
-    return false;
-}
-
-#endif
+#include "led.c"
+#include "oled.c"
 #include "tap-dances.c"
+#include "combos.c"
