@@ -1,7 +1,7 @@
 #include QMK_KEYBOARD_H
 #include "combos.h"
 #include "layers/layers.h"
-#include "tap-dances.h"
+#include "tap-dances/tap-dances.h"
 
 const uint16_t PROGMEM n_r__esc[]                = {RALT_T(KC_N), LGUI_T(KC_R), COMBO_END};
 const uint16_t PROGMEM c_k__homerow[]            = {KC_C, KC_K, COMBO_END};

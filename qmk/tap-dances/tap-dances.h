@@ -1,6 +1,5 @@
 #pragma once
 #include "quantum.h"
-#include "layers/layers.h"
 
 enum {
     TD_SPC_ENT_TT1,
