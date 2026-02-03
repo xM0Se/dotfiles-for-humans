@@ -1,4 +1,5 @@
 COMBO_ENABLE = yes
+RAW_ENABLE = yes
 RGBLIGHT_ENABLE = no
 REPEAT_KEY_ENABLE = yes
 CAPS_WORD_ENABLE = yes
@@ -9,3 +10,4 @@ OLED_ENABLE = yes
 LTO_ENABLE = yes
 WPM_ENABLE = yes
 SPLIT_WPM_ENABLE = yes
+SRC += tap-dances.c

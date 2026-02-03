@@ -17,257 +17,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 #include QMK_KEYBOARD_H
-
-enum layer_names {
-    _default_layer,
-    _number_layer,
-    _symbol_layer,
-    _keyboard_layer,
-    _arrow_layer,
-    _onshape,
-    _onshape_numbers,
-};
-
-enum layers {
-    _BASE,
-    _LAYER1,
-    _LAYER2,
-    _LAYER3,
-    _LAYER4,
-    _LAYER5,
-    _LAYER6,
-};
-
-/* ----------------------------------------------------------------------------------------------------------------------------------------------------- */
-/* TAP DANCES */
-
-enum {
-    TD_SPC_ENT_TT1,
-    TD_ALT_BSPC_TT3,
-    TD_SFT_TT2,
-    TD_CBR_ALT,
-    TD_BRC_CTL,
-    TD_SLSH_GUI,
-    TD_PRN_GUI,
-    TD_ABK,
-    TD_MINS_CTL,
-    TD_COLN_ALT,
-};
-
-static bool td_coln_alt_held = false;
-void dance_coln_alt_finished(tap_dance_state_t *state, void *user_data) {
-    if (state->pressed) {
-        td_coln_alt_held = true;
-        register_code(KC_RALT);
-    } else {
-        td_coln_alt_held = false;
-        tap_code16(KC_COLN);
-    }
-}
-
-void dance_coln_alt_reset(tap_dance_state_t *state, void *user_data) {
-    if (td_coln_alt_held) {
-        unregister_code(KC_RALT);
-        td_coln_alt_held = false;
-    }
-}
-
-static bool td_mins_ctl_held = false;
-void dance_mins_ctl_finished(tap_dance_state_t *state, void *user_data) {
-    if (state->pressed) {
-        td_mins_ctl_held = true;
-        register_code(KC_RCTL);
-    } else {
-        td_mins_ctl_held = false;
-        if (state->count == 1) {
-            tap_code(KC_MINS);
-        } else if (state->count == 2) {
-            tap_code16(KC_UNDS);
-        }
-    }
-}
-
-void dance_mins_ctl_reset(tap_dance_state_t *state, void *user_data) {
-    if (td_mins_ctl_held) {
-        unregister_code(KC_RCTL);
-        td_mins_ctl_held = false;
-    }
-}
-
-static bool td_slsh_gui_held = false;
-void dance_slsh_gui_finished(tap_dance_state_t *state, void *user_data) {
-    if (state->pressed) {
-        td_slsh_gui_held = true;
-        register_code(KC_RGUI);
-    } else {
-        td_slsh_gui_held = false;
-        if (state->count == 1) {
-            tap_code(KC_SLSH);
-        } else if (state->count == 2) {
-            tap_code(KC_BSLS);
-        }
-    }
-}
-
-void dance_slsh_gui_reset(tap_dance_state_t *state, void *user_data) {
-    if (td_slsh_gui_held) {
-        unregister_code(KC_RGUI);
-        td_slsh_gui_held = false;
-    }
-}
-
-static bool td_prn_gui_held = false;
-void dance_prn_gui_finished(tap_dance_state_t *state, void *user_data) {
-    if (state->pressed) {
-        td_prn_gui_held = true;
-        register_code(KC_LGUI);
-    } else {
-        td_prn_gui_held = false;
-        if (state->count == 1) {
-            tap_code16(KC_LPRN);
-        } else if (state->count == 2) { 
-            tap_code16(KC_RPRN);
-        }
-    }
-}
-
-void dance_prn_gui_reset(tap_dance_state_t *state, void *user_data) {
-    if (td_prn_gui_held) {
-        unregister_code(KC_LGUI);
-        td_prn_gui_held = false;
-    }
-}
-
-static bool td_brc_ctl_held = false;
-void dance_brc_ctl_finished(tap_dance_state_t *state, void *user_data) {
-    if (state->pressed) {
-        td_brc_ctl_held = true;
-        register_code(KC_LCTL);
-    } else {
-        td_brc_ctl_held = false;
-        if (state->count == 1) {
-            tap_code(KC_LBRC);
-        } else if (state->count == 2) {
-            tap_code(KC_RBRC);
-        }
-    }
-}
-
-void dance_brc_ctl_reset(tap_dance_state_t *state, void *user_data) {
-    if (td_brc_ctl_held) {
-        unregister_code(KC_LCTL);
-        td_brc_ctl_held = false;
-    }
-}
-
-static bool td_cbr_alt_held = false;
-void dance_cbr_alt_finished(tap_dance_state_t *state, void *user_data) {
-    if (state->pressed) {
-        td_cbr_alt_held = true;
-        register_code(KC_LALT);
-    } else {
-        td_cbr_alt_held = false;
-        if (state->count == 1) {
-            tap_code16(KC_LCBR);
-        } else if (state->count == 2) {
-            tap_code16(KC_RCBR);
-        }
-    }
-}
-
-void dance_cbr_alt_reset(tap_dance_state_t *state, void *user_data) {
-    if (td_cbr_alt_held) {
-        unregister_code(KC_LALT);
-        td_cbr_alt_held = false;
-    }
-}
-
-static bool td_spc_ent_tt1_held = false;
-void dance_spc_ent_tt1_finished(tap_dance_state_t *state, void *user_data) {
-    if (state->pressed) {
-        td_spc_ent_tt1_held = true;
-        layer_on(_LAYER1);
-    } else {
-        td_spc_ent_tt1_held = false;
-        if (state->count == 1) {
-            tap_code(KC_SPC);
-        } else if (state->count == 2) {
-            tap_code(KC_ENT);
-        } else if (state->count >= 5) {
-            layer_on(_LAYER1);
-        }
-    }
-}
-
-void dance_spc_ent_tt1_reset(tap_dance_state_t *state, void *user_data) {
-    if (td_spc_ent_tt1_held) {
-        layer_off(_LAYER1);
-        td_spc_ent_tt1_held = false;
-    }
-}
-
-static bool td_alt_bspc_tt3_held = false;
-void dance_alt_bspc_tt3_finished(tap_dance_state_t *state, void *user_data) {
-    if (state->pressed) {
-        td_alt_bspc_tt3_held = true;
-        layer_on(_LAYER4);
-    } else {
-        td_alt_bspc_tt3_held = false;
-        if (state->count == 1) {
-            tap_code(KC_BSPC);
-        } else if (state->count == 2) {
-            register_code(KC_LALT);
-            tap_code(KC_BSPC);
-            unregister_code(KC_LALT);
-        } else if (state->count >= 5) {
-            layer_on(_LAYER4);
-        }
-    }
-}
-
-void dance_alt_bspc_tt3_reset(tap_dance_state_t *state, void *user_data) {
-    if (td_alt_bspc_tt3_held) {
-        layer_off(_LAYER4);
-        td_alt_bspc_tt3_held = false;
-    }
-}
-
-static bool td_sft_tt2 = false;
-void dance_sft_tt2_finished(tap_dance_state_t *state, void *user_data) {
-    if (state->pressed) {
-        td_sft_tt2 = true;
-        layer_on(_LAYER2);
-    } else {
-        td_sft_tt2 = false;
-        if (state->count == 1) {
-            set_oneshot_mods(MOD_BIT(KC_RSFT));
-        } else if (state->count == 2) {
-            caps_word_toggle();
-        } else if (state->count >= 5) {
-            layer_on(_LAYER2);
-        }
-    }
-}
-
-void dance_sft_tt2_reset(tap_dance_state_t *state, void *user_data) {
-    if (td_sft_tt2) {
-        layer_off(_LAYER2);
-        td_sft_tt2 = false;
-    }
-}
-
-tap_dance_action_t tap_dance_actions[] = {
-    [TD_SPC_ENT_TT1]  = ACTION_TAP_DANCE_FN_ADVANCED(NULL, dance_spc_ent_tt1_finished, dance_spc_ent_tt1_reset),
-    [TD_ALT_BSPC_TT3] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, dance_alt_bspc_tt3_finished, dance_alt_bspc_tt3_reset),
-    [TD_SFT_TT2]      = ACTION_TAP_DANCE_FN_ADVANCED(NULL, dance_sft_tt2_finished, dance_sft_tt2_reset),
-    [TD_CBR_ALT]      = ACTION_TAP_DANCE_FN_ADVANCED(NULL, dance_cbr_alt_finished, dance_cbr_alt_reset),
-    [TD_BRC_CTL]      = ACTION_TAP_DANCE_FN_ADVANCED(NULL, dance_brc_ctl_finished, dance_brc_ctl_reset),
-    [TD_SLSH_GUI]     = ACTION_TAP_DANCE_FN_ADVANCED(NULL, dance_slsh_gui_finished, dance_slsh_gui_reset),
-    [TD_PRN_GUI]      = ACTION_TAP_DANCE_FN_ADVANCED(NULL, dance_prn_gui_finished, dance_prn_gui_reset),
-    [TD_ABK]          = ACTION_TAP_DANCE_DOUBLE(KC_LABK, KC_RABK),
-    [TD_MINS_CTL]     = ACTION_TAP_DANCE_FN_ADVANCED(NULL, dance_mins_ctl_finished, dance_mins_ctl_reset),
-    [TD_COLN_ALT]     = ACTION_TAP_DANCE_FN_ADVANCED(NULL, dance_coln_alt_finished, dance_coln_alt_reset),
-};
+#include "tap-dances.h"
+#include "layers.h"
 
 /* ----------------------------------------------------------------------------------------------------------------------------------------------------- */
 /* COMBOS */
@@ -344,11 +95,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [4] = LAYOUT_split_3x6_3(
 
   //,-----------------------------------------------------------------------------------------------------------------------.                    ,---------------------------------------------------------------------------------------------------------------------------.
-      KC_NO,            KC_NO,               KC_NO,               KC_NO,             KC_NO,               KC_NO,                                   KC_NO,             KC_NO,                   KC_NO,              KC_NO,              KC_NO,              KC_NO,
+      KC_NO,            KC_NO,               KC_NO,               KC_NO,             KC_NO,               KC_NO,                                   KC_DOWN,             KC_RIGHT,                   KC_NO,              KC_NO,              KC_NO,              KC_NO,
   //|-------------------+-------------------+-------------------+-------------------+-------------------+-------------------|                    |-------------------+------------------------+-------------------+-------------------+-------------------+-------------------|
-      KC_NO,            KC_NO,               KC_NO,               KC_NO,             KC_NO,               KC_NO,                                   KC_NO,             KC_LEFT,                 KC_DOWN,            KC_UP,              KC_RGHT,            KC_NO,
+      KC_NO,            KC_NO,               KC_NO,               KC_NO,             KC_NO,               KC_NO,                                   KC_NO,             KC_NO,                 KC_NO,            KC_NO,              KC_RGHT,            KC_NO,
   //|-------------------+-------------------+-------------------+-------------------+-------------------+-------------------|                    |-------------------+------------------------+-------------------+-------------------+-------------------+-------------------|
-      KC_NO,            KC_NO,               KC_NO,               KC_NO,             KC_NO,               KC_NO,                                   KC_NO,             KC_NO,                   KC_NO,              KC_NO,              KC_NO,              KC_NO,
+      KC_NO,            KC_NO,               KC_NO,               KC_NO,             KC_NO,               KC_NO,                                   KC_UP,             KC_LEFT,                   KC_NO,              KC_NO,              KC_NO,              KC_NO,
   //|-------------------+-------------------+-------------------+-------------------+-------------------+-------------------|                    |-------------------+------------------------+-------------------+-------------------+-------------------+-------------------|
                                                                                                             TO(0),  _______,  KC_SPC,     KC_ENT,   _______,  KC_RALT
                                                                                                         //`--------------------------'  `--------------------------'
@@ -376,7 +127,19 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|-------------------+-------------------+-------------------+-------------------+-------------------+-------------------|                    |-------------------+------------------------+-------------------+-------------------+-------------------+-------------------|
                                                                                                             TO(0),   TO(5),  KC_BSPC,     KC_ENT,   _______,  KC_RALT
                                                                                                         //`--------------------------'  `--------------------------'
-  )
+  ),
+    [6] = LAYOUT_split_3x6_3(
+
+  //,-----------------------------------------------------------------------------------------------------------------------.                    ,---------------------------------------------------------------------------------------------------------------------------.
+      KC_NO,            KC_7,                KC_8,                KC_9,              KC_ENT,              KC_M,                                   KC_NO,             KC_NO,                   KC_NO,              KC_NO,              KC_NO,              KC_NO,
+  //|-------------------+-------------------+-------------------+-------------------+-------------------+-------------------|                    |-------------------+------------------------+-------------------+-------------------+-------------------+-------------------|
+      KC_NO,            KC_4,                KC_5,                KC_6,              KC_DOT,              KC_C,                                   KC_NO,             KC_NO,                   KC_NO,              KC_NO,              KC_NO,              KC_NO,
+  //|-------------------+-------------------+-------------------+-------------------+-------------------+-------------------|                    |-------------------+------------------------+-------------------+-------------------+-------------------+-------------------|
+      KC_NO,            KC_1,                KC_2,                KC_3,              KC_0,                KC_NO,                                   KC_NO,             KC_NO,                   KC_NO,              KC_NO,              KC_NO,              KC_NO,
+  //|-------------------+-------------------+-------------------+-------------------+-------------------+-------------------|                    |-------------------+------------------------+-------------------+-------------------+-------------------+-------------------|
+                                                                                                            TO(0),   TO(5),  KC_BSPC,     KC_ENT,   _______,  KC_RALT
+     
+        ),
 };
 
 #ifdef ENCODER_MAP_ENABLE
