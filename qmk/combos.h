@@ -1,10 +1,10 @@
 #pragma once
 
 enum combos {
-    ESC,
-    HOMEROW,
-    HOMEROW_SCROLL,
-    TAB,
-    DELETE,
+    _esc,
+    _homerow,
+    _homerow_scroll,
+    _tab,
+    _delete,
     COMBO_LENGTH
 };
