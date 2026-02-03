@@ -1,3 +1,5 @@
+#ifndef COMBOS_C
+#define COMBOS_C
 #include QMK_KEYBOARD_H
 #include "combos.h"
 #include "layers.h"
@@ -14,3 +16,4 @@ combo_t key_combos[COMBO_LENGTH] = {
     COMBO(tab_shift_space, KC_TAB),
     COMBO(delete_shift_bspc, KC_DEL),
 };
+#endif
