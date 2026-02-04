@@ -33,3 +33,4 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 #include "oled.c"
 #include "tap-dances/tap-dances.c"
 #include "combos.c"
+#include "raw-hid.c"
